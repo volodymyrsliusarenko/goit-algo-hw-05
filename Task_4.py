@@ -1,14 +1,14 @@
 def input_error(func):
-    def handler(*args, **kwargs):
+    def wrapper(*args, **kwargs):
         try:
             return func(*args, **kwargs)
         except KeyError:
-            return "KeyError Give me name and phone please."
+            return "Contact alredy exists, please try new name, or 'change' command to update"
         except ValueError:
-            return "ValueError Give me name and phone please."
+            return "Please enter name and phone please."
         except IndexError:
-            return "IndexError Give me name to show the phone number"
-    return handler
+            return "Please enter name to show the phone number."
+    return wrapper
 
 
 def parse_input(user_input):
@@ -20,7 +20,7 @@ def parse_input(user_input):
 def add_contact(args, contacts):
     name, phone = args
     if name in contacts:
-        raise ValueError
+        raise KeyError
     contacts[name] = phone
     return "Contact added."
 
